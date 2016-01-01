@@ -104,7 +104,15 @@ difference(r=1) {
             // main axle
             translate([left_side_pos * axle_offset_pct, side_length * main_drum_length_pct, side_height * main_drum_height_pct])
                 rotate([0, 90, 0])
-                    cylinder(h=bottom_width*axle_length_pct, r=axle_dia/2);
+                    cylinder(h=bottom_width*axle_length_pct + 10, r=axle_dia/2);
+        }
+
+        // licker-in axle adjuster
+        color([1.0, 1.0, 1.0]) {
+            // licker-in axle
+            translate([left_side_pos - 1, side_length * li_drum_length_pct, side_height * li_drum_height_pct - 2])
+                rotate([0, 90, 0])
+                    cylinder(h=bottom_width + 8.5, r=axle_dia);
         }
         
         // pulleys
@@ -112,16 +120,16 @@ difference(r=1) {
             // licker-in pulley
             translate([left_side_pos-pulley_acrylic_thickness * 3 - pulley_gap, side_length * li_drum_length_pct, side_height * li_drum_height_pct])
                 rotate([0, 90, 0])
-                    pulley(t = pulley_acrylic_thickness * 3, r=li_drum_dia/2);    
+                    pulley(t = pulley_acrylic_thickness * 3, r=main_drum_dia/2);    
             // main pulley
             translate([left_side_pos-pulley_acrylic_thickness * 3 - pulley_gap, side_length * main_drum_length_pct, side_height * main_drum_height_pct])
                 rotate([0, 90, 0])
-                    pulley(t = pulley_acrylic_thickness * 3, r=main_drum_dia/2);    
+                    pulley(t = pulley_acrylic_thickness * 3, r=li_drum_dia/2);    
         }
         
         // drums
         color([0.3, 0.3, 0.3]) {
-                // licker-in drum
+            // licker-in drum
             translate([left_side_pos + acrylic_thickness / 2, side_length * li_drum_length_pct, side_height * li_drum_height_pct])
                 rotate([0, 90, 0])
                     cylinder(h=bottom_width, r=li_drum_dia/2);
@@ -130,12 +138,17 @@ difference(r=1) {
                 rotate([0, 90, 0])
                     cylinder(h=bottom_width, r=main_drum_dia/2);
         }
+        
+        // crank
+        color([0.7, 0.3, 0.3]) {
+            translate([right_side_pos + acrylic_thickness + pulley_gap, side_length * main_drum_length_pct - 14, side_height * main_drum_height_pct])
+                rotate([-45, 0, 0])
+                    cube([acrylic_thickness, 20, 80]);
+            translate([right_side_pos + acrylic_thickness + pulley_gap, side_length * main_drum_length_pct + 40, side_height * main_drum_height_pct + 40])
+                rotate([0, 90, 0])
+                    cylinder(h=20, r=axle_dia/2);
+
+        }
 	}
-	// negative things
-	//union() {
-    //    translate([plate_height/2+10, plate_width/2+10]) {
-    //        circle(4);
-    //    }
-    //}
 }
 
